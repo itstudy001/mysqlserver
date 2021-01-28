@@ -24,6 +24,24 @@
 		<input type="button" value="데이터 삽입"
 		id="insertbtn" />
 	</form>
+	
+	<form action="member/join" 
+		method="post" 
+		enctype="multipart/form-data"
+		id="memberform">
+		이메일:<input type="text" name="email"/>
+		<br/>
+		비밀번호:<input type="password" name="pw"/>
+		<br/>
+		닉네임:<input type="text" name="nickname"/>
+		<br/>
+		이미지:<input type="file" name='profile' 
+		accept="image/*"/>
+		<br/>
+		
+		<input type="submit" value="회원가입"
+		id="joinbtn" />
+	</form>
 </body>
 
 <script>
