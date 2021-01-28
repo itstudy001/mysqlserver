@@ -16,7 +16,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import kakao.itstudy.mysqlserver.dao.ItemDAO;
+import kakao.itstudy.mysqlserver.dao.MemberDAO;
 import kakao.itstudy.mysqlserver.domain.Item;
+import kakao.itstudy.mysqlserver.domain.Member;
 
 //설정 파일의 위치를 지정해서 설정 파일의 내용을 실행해서 테스트
 @WebAppConfiguration
@@ -29,6 +31,34 @@ public class ItemTest {
 	//ItemDAO 연결 객체
 	@Autowired
 	private ItemDAO itemDao;
+	
+	//MemberDAO 연결 객체
+	@Autowired
+	private MemberDAO memberDao;
+	@Test
+	@Transactional
+	public void memberTest() {
+		System.err.println("이메일 체크:" + 
+			memberDao.emailCheck("ggangpae1@gmail.com"));
+		System.err.println("이메일 체크:" + 
+			memberDao.emailCheck("ggangpae2@gmail.com"));
+		
+		System.err.println("닉네임 체크:" + 
+			memberDao.nicknameCheck("관리자"));
+		System.err.println("닉네임 체크:" + 
+			memberDao.nicknameCheck("군계"));
+		
+		//회원 가입
+		Member member = new Member();
+		member.setEmail("itstudy@kakao.com");
+		member.setPw("1234");
+		member.setNickname("군계");
+		member.setProfile("adam.png");
+		
+		System.err.println("회원 가입:" + 
+			memberDao.join(member));
+			
+	}
 	
 	@Test
 	@Transactional

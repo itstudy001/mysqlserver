@@ -21,6 +21,7 @@
 		<property name="mappingResources">
 			<list>
 			<value>kakao/itstudy/mysqlserver/dao/item.hbm.xml</value>
+			<value>kakao/itstudy/mysqlserver/dao/member.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
