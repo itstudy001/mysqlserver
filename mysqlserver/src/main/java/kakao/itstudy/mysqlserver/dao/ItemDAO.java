@@ -1,5 +1,6 @@
 package kakao.itstudy.mysqlserver.dao;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -171,4 +172,47 @@ public class ItemDAO {
 
 		return result;
 	}
+
+	//테이블에서 데이터 1개를 가져오는 메소드
+	public Item detail(int itemid) {
+		Item item = null;
+		//기본키를 가지고 하나의 데이터 찾아오는 방법
+		Session session = sessionFactory.getCurrentSession();
+		item = session.get(Item.class, itemid);
+		return item;
+	}
+	
+	
+	//가장 큰 itemid를 찾아오는 메소드
+	public int maxid() {
+		Session session = 
+			sessionFactory.getCurrentSession();
+		List<Integer> list = 
+			session.createNativeQuery(
+				"select max(itemid) from item")
+			.getResultList();
+		if(list == null || list.size() == 0) {
+			return 0;
+		}else {
+			return list.get(0);
+		}
+	}
+	
+	//데이터 삽입을 위한 메소드
+	//리턴 되는 값은 기본키 값입니다.
+	public Serializable insert(Item item) {
+		Session session = 
+				sessionFactory.getCurrentSession();
+		return session.save(item);
+	}
 }
+
+
+
+
+
+
+
+
+
+
