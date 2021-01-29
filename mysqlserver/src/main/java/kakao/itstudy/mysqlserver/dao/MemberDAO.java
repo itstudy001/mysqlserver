@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kakao.itstudy.mysqlserver.domain.Item;
 import kakao.itstudy.mysqlserver.domain.Member;
 
 @Repository
@@ -44,6 +45,14 @@ public class MemberDAO {
 		Session session = 
 			sessionFactory.getCurrentSession();
 		return session.save(member);
+	}
+	
+	//로그인을 위한 메소드
+	public Member login(String email) {
+		Session session = sessionFactory.getCurrentSession();
+		Member member = 
+				session.get(Member.class, email);
+		return member;
 	}
 }
 

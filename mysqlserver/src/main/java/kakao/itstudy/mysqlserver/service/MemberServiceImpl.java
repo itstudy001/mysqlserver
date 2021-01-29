@@ -137,7 +137,7 @@ public class MemberServiceImpl implements MemberService {
 						}catch(Exception e) {}
 
 						//비밀번호는 복호화가 불가능하도록 저장
-						member.setPw(BCrypt.gensalt());
+						member.setPw(BCrypt.hashpw(pw, BCrypt.gensalt()));
 						member.setNickname(nickname);
 						member.setProfile(profile);
 
@@ -151,6 +151,50 @@ public class MemberServiceImpl implements MemberService {
 			}
 		}
 		}catch(Exception e) {}
+		request.setAttribute("result", map);
+	}
+
+	@Override
+	@Transactional
+	public void login(HttpServletRequest request) {
+		//파라미터 읽기
+		String email = 
+				request.getParameter("email");
+		String pw = 
+				request.getParameter("pw");
+		
+		//로그인 결과를 저장할 Map
+		Map<String, Object> map = 
+				new HashMap<String, Object>();
+		map.put("result", false);
+		
+		try {
+			CryptoUtil util = new CryptoUtil();
+			
+			//email에 해당하는 데이터 가져오기 
+			Member member = 
+					memberDao.login(
+							util.encrypt(email));
+			System.err.println(member);
+			
+			//가져온 데이터가 있으면 비밀번호 비교 
+			if(member != null) {
+				//비밀번호 비교
+				System.out.println(pw);
+				if(BCrypt.checkpw(pw, member.getPw())) {
+					map.put("result", true);
+					System.err.println("로그인 성공");
+					map.put("member", member);
+					//웹을 위한 것이라면 
+					request.getSession()
+					.setAttribute("member", member);
+				}
+			}		
+		}catch(Exception e) {
+			System.err.println("로그인 에러:" + 
+			e.getLocalizedMessage());
+		}
+		
 		request.setAttribute("result", map);
 	}
 }

@@ -19,6 +19,7 @@ import kakao.itstudy.mysqlserver.dao.ItemDAO;
 import kakao.itstudy.mysqlserver.dao.MemberDAO;
 import kakao.itstudy.mysqlserver.domain.Item;
 import kakao.itstudy.mysqlserver.domain.Member;
+import kakao.itstudy.mysqlserver.util.CryptoUtil;
 
 //설정 파일의 위치를 지정해서 설정 파일의 내용을 실행해서 테스트
 @WebAppConfiguration
@@ -38,6 +39,7 @@ public class ItemTest {
 	@Test
 	@Transactional
 	public void memberTest() {
+		/*
 		System.err.println("이메일 체크:" + 
 			memberDao.emailCheck("ggangpae1@gmail.com"));
 		System.err.println("이메일 체크:" + 
@@ -57,7 +59,20 @@ public class ItemTest {
 		
 		System.err.println("회원 가입:" + 
 			memberDao.join(member));
-			
+		*/
+		
+		//로그인 확인
+		try {
+		CryptoUtil util = new CryptoUtil();
+		System.err.println(
+			memberDao.login(
+				util.encrypt(
+					"ggangpae1@gmail.com")));
+		System.err.println(
+				memberDao.login(
+					util.encrypt(
+						"itstudy@kakao.com")));
+		}catch(Exception e) {}			
 	}
 	
 	@Test
@@ -92,7 +107,6 @@ public class ItemTest {
 		
 	}
 }
-
 
 
 

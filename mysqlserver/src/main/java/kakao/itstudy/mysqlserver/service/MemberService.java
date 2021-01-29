@@ -14,4 +14,7 @@ public interface MemberService {
 	//회원 가입을 위한 메소드
 	public void join(MultipartHttpServletRequest request);
 
+	//로그인 처리를 위한 메소드
+	public void login(HttpServletRequest request);
+
 }

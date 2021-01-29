@@ -45,6 +45,16 @@ public class MemberRestController {
 				request.getAttribute("result");
 	}
 
+	//회원 가입 검사
+	@RequestMapping(value = "member/login",
+			method=RequestMethod.POST)
+	public Map<String, Object> login(
+			HttpServletRequest request){
+		memberService.login(request);
+		return (Map<String, Object>)
+				request.getAttribute("result");
+	}
+
 
 }
 

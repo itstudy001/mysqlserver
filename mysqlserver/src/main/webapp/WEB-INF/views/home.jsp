@@ -42,9 +42,41 @@
 		<input type="submit" value="회원가입"
 		id="joinbtn" />
 	</form>
+	
+	<form method="post" id="loginform">
+		이메일:<input type="text" name="email"/>
+		<br/>
+		비밀번호<input type="password" name="pw"/>
+		<br/>
+		<input type="button" value="로그인"
+		id="loginbtn" />
+	</form>
 </body>
 
 <script>
+	document.getElementById('loginbtn')
+		.addEventListener('click', function(e){
+		//폼에 입력된 데이터 가져오기
+		var formData = new FormData(
+			document.getElementById('loginform'));
+		
+		//ajax 객체 생성
+		//ajax로 데이터를 전송해서 결과를 받기
+		var xhr = new XMLHttpRequest();
+		//요청 생성
+		xhr.open("POST", "member/login", true);
+		//전송
+		xhr.send(formData);
+		
+		//응답을 처리
+		xhr.onload = function(){
+			if(xhr.status == 200){
+				var obj = JSON.parse(xhr.responseText);
+				alert(obj.result)
+			}
+		}
+	})
+
 	document.getElementById("insertbtn")
 		.addEventListener('click', function(e){
 			//폼에 입력된 데이터 가져오기
